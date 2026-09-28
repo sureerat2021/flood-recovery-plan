@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>แผนฟื้นฟูบ้านหลังน้ำท่วม</title>
+<style>
+  :root {
+    --bg: #ffffff; --fg: #1f2328; --muted: #59636e; --faint: #8b949e;
+    --line: #d8dee4; --fill: #f6f8fa; --accent: #0969da;
+    --red: #cf222e; --red-bg: #ffebe9; --amber: #9a6700; --green: #1a7f37;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0d1117; --fg: #e6edf3; --muted: #9198a1; --faint: #6e7681;
+      --line: #30363d; --fill: #161b22; --accent: #4493f8;
+      --red: #f85149; --red-bg: #2d1214; --amber: #d29922; --green: #3fb950;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "Sukhumvit Set", "Noto Sans Thai", "Segoe UI", sans-serif;
+    font-size: 16px; line-height: 1.55;
+  }
+  main { max-width: 900px; margin: 0 auto; padding: 24px 16px 64px; }
+  h1 { font-size: 24px; margin: 0 0 4px; }
+  h2 { font-size: 19px; margin: 32px 0 12px; }
+  h3 { font-size: 16px; margin: 0; }
+  .sub { color: var(--muted); margin: 0; }
+  .small { font-size: 13px; color: var(--faint); }
+  .danger {
+    margin-top: 20px; padding: 12px 14px; border-radius: 8px;
+    background: var(--red-bg); border: 1px solid var(--red);
+  }
+  .danger strong { color: var(--red); display: block; margin-bottom: 4px; }
+  .danger ul { margin: 0; padding-left: 20px; }
+  .progress { margin-top: 20px; }
+  .progress-top { display: flex; justify-content: space-between; font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+  .bar { height: 8px; border-radius: 4px; background: var(--fill); border: 1px solid var(--line); overflow: hidden; }
+  .bar > div { height: 100%; background: var(--accent); width: 0; transition: width .2s; }
+  table { width: 100%; border-collapse: collapse; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { background: var(--fill); font-size: 13px; color: var(--muted); font-weight: 600; }
+  tr:last-child td { border-bottom: none; }
+  td.num { text-align: right; white-space: nowrap; }
+  .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; vertical-align: middle; }
+  .dot.red { background: var(--red); } .dot.amber { background: var(--amber); } .dot.green { background: var(--green); }
+  .dot.none { background: transparent; border: 1px solid var(--line); }
+  .tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+  .tab {
+    border: 1px solid var(--line); background: var(--bg); color: var(--fg);
+    border-radius: 999px; padding: 6px 12px; font-size: 14px; cursor: pointer; font-family: inherit;
+  }
+  .tab.active { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+  .phase-head { margin-bottom: 12px; }
+  .task { display: flex; gap: 10px; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid var(--line); cursor: pointer; }
+  .task:last-child { border-bottom: none; }
+  .task input { width: 20px; height: 20px; margin-top: 2px; flex-shrink: 0; accent-color: var(--accent); }
+  .task .note { font-size: 13px; color: var(--muted); }
+  .task.done .text { color: var(--faint); text-decoration: line-through; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }
+  a { color: var(--accent); }
+  .reset { margin-top: 32px; background: none; border: 1px solid var(--line); color: var(--muted); border-radius: 6px; padding: 6px 10px; font-family: inherit; cursor: pointer; }
+</style>
+</head>
+<body>
+<main>
+  <h1>แผนฟื้นฟูบ้านหลังน้ำท่วม</h1>
+  <p class="sub">บ้านชั้นเดียว น้ำท่วมถึงเอว (ประมาณ 1 เมตร) · ติ๊กเช็กลิสต์ได้ เบราว์เซอร์จะจำไว้ให้</p>
+
+  <div class="danger">
+    <strong>ห้ามทำเด็ดขาด</strong>
+    <ul>
+      <li>ห้ามแตะปลั๊กหรือตู้ไฟตอนยืนในน้ำ</li>
+      <li>ห้ามเปิดไฟกลับเองก่อนช่างตรวจ</li>
+      <li>ห้ามเสียบปลั๊กเครื่องใช้ไฟฟ้าที่จมน้ำ</li>
+      <li>ห้ามสตาร์ทรถที่จมน้ำ</li>
+      <li>ห้ามผสมไฮเตอร์กับน้ำยาล้างห้องน้ำหรือแอมโมเนีย</li>
+    </ul>
+  </div>
+
+  <div class="progress">
+    <div class="progress-top"><span>ความคืบหน้าทั้งหมด</span><span id="progress-text"></span></div>
+    <div class="bar"><div id="progress-bar"></div></div>
+  </div>
+
+  <h2>ภาพรวม 5 ช่วง</h2>
+  <table>
+    <thead><tr><th>ช่วง</th><th>เวลา</th><th>เป้าหมาย</th><th style="text-align:right">เสร็จ</th></tr></thead>
+    <tbody id="overview"></tbody>
+  </table>
+
+  <h2>เช็กลิสต์แต่ละช่วง</h2>
+  <div class="tabs" id="tabs"></div>
+  <div class="phase-head">
+    <h3 id="phase-title"></h3>
+    <p class="sub" id="phase-goal"></p>
+  </div>
+  <div id="phase-tasks"></div>
+
+  <h2>คัดแยกของ: ทิ้ง / ส่งช่าง / ใช้ต่อ</h2>
+  <table>
+    <thead><tr><th>ของ</th><th>ทำอย่างไร</th></tr></thead>
+    <tbody id="sort"></tbody>
+  </table>
+  <p class="small"><span class="dot red"></span>ทิ้ง &nbsp; <span class="dot amber"></span>ส่งช่าง / รอตรวจ &nbsp; <span class="dot green"></span>ล้างแล้วใช้ต่อได้</p>
+
+  <div class="grid">
+    <div>
+      <h2>ของที่ต้องเตรียม</h2>
+      <div id="supplies"></div>
+    </div>
+    <div>
+      <h2>เบอร์โทรที่ควรมี</h2>
+      <table>
+        <thead><tr><th>หน่วยงาน</th><th style="text-align:right">เบอร์</th></tr></thead>
+        <tbody>
+          <tr><td>การไฟฟ้านครหลวง (กฟน.)</td><td class="num"><a href="tel:1130">1130</a></td></tr>
+          <tr><td>การไฟฟ้าส่วนภูมิภาค (กฟภ.)</td><td class="num"><a href="tel:1129">1129</a></td></tr>
+          <tr><td>กรมป้องกันและบรรเทาสาธารณภัย (ปภ.)</td><td class="num"><a href="tel:1784">1784</a></td></tr>
+          <tr><td>เจ็บป่วยฉุกเฉิน</td><td class="num"><a href="tel:1669">1669</a></td></tr>
+        </tbody>
+      </table>
+      <p class="small">การลงทะเบียนขอเงินช่วยเหลือ ติดต่อที่สำนักงานเขต / อบต. / เทศบาลในพื้นที่</p>
+    </div>
+  </div>
+
+  <button class="reset" id="reset">ล้างเช็กลิสต์ทั้งหมด</button>
+</main>
+
+<script>
+const PHASES = [
+  { id: "p1", label: "1. ปลอดภัย + หลักฐาน", when: "วันแรก", goal: "เข้าบ้านอย่างปลอดภัย เก็บหลักฐานก่อนย้ายของ", tasks: [
+    ["p1-1", "ปิดเมนเบรกเกอร์", "เฉพาะตอนตัวแห้งและยืนบนที่แห้ง ถ้าต้องลุยน้ำ ให้โทรการไฟฟ้าตัดไฟ"],
+    ["p1-2", "ปิดวาล์วแก๊ส", "ถ้าได้กลิ่นแก๊ส อย่าเปิดสวิตช์หรือจุดไฟ"],
+    ["p1-3", "ใส่บูทยาง + ถุงมือยาง + หน้ากาก", "ถ้ามีแผล ให้ปิดกันน้ำ (โรคฉี่หนู)"],
+    ["p1-4", "ตรวจผนังร้าว พื้นทรุด ฝ้าย้อย", "ถ้ามี อย่าเพิ่งเข้าไปอยู่"],
+    ["p1-5", "ถ่ายรูป / วิดีโอทุกห้อง + เส้นระดับน้ำบนผนัง"],
+    ["p1-6", "เก็บเอกสารสำคัญและของมีค่าไปไว้ที่แห้ง", "โฉนด บัตร สมุดบัญชี กรมธรรม์"],
+    ["p1-7", "ลงทะเบียนผู้ประสบภัยกับเขต / อบต. / เทศบาล"],
+    ["p1-8", "แจ้งเคลมประกันบ้าน / รถ (ถ้ามี)"],
+    ["p1-9", "หาที่พักชั่วคราวระหว่างเก็บกวาด"],
+  ]},
+  { id: "p2", label: "2. ขนของออก", when: "วันที่ 2–3", goal: "ขนทุกอย่างออกไปคัดแยกกลางแจ้ง", tasks: [
+    ["p2-1", "ขนของทุกห้องออกไปนอกบ้าน"],
+    ["p2-2", "คัดแยกเป็น 3 กอง: ทิ้ง / ล้างใช้ต่อ / ส่งช่าง", "ดูตารางคัดแยกด้านล่าง"],
+    ["p2-3", "กองขยะน้ำท่วมไว้หน้าบ้าน แล้วแจ้งเขต / อบต. มาเก็บ"],
+    ["p2-4", "ทิ้งอาหารที่โดนน้ำ และของในตู้เย็นที่ไฟดับนาน"],
+    ["p2-5", "รถที่จมน้ำ: ห้ามสตาร์ท ให้ลากไปอู่ / แจ้งประกัน"],
+  ]},
+  { id: "p3", label: "3. โคลน + ล้าง", when: "วันที่ 3–5", goal: "เอาโคลนออก ล้าง และฆ่าเชื้อ", tasks: [
+    ["p3-1", "ขูดโคลนออกตอนยังเปียก", "ปล่อยให้แห้งแล้วจะแข็ง ขูดยากกว่ามาก"],
+    ["p3-2", "ฉีดน้ำล้างจากบนลงล่าง จากในบ้านออกไปนอกบ้าน", "ถ้าเช่าเครื่องฉีดน้ำแรงดันสูงได้จะเร็วขึ้นมาก"],
+    ["p3-3", "ล้างผนังและพื้นด้วยผงซักฟอก"],
+    ["p3-4", "เช็ดฆ่าเชื้อด้วยไฮเตอร์ผสมน้ำประมาณ 1 : 10–15", "ห้ามผสมกับน้ำยาล้างห้องน้ำหรือแอมโมเนีย และเปิดหน้าต่างระบายอากาศ"],
+    ["p3-5", "รื้อพื้นลามิเนต / ไม้ที่บวม"],
+    ["p3-6", "ตัดผนังยิปซัมส่วนที่จมน้ำออก (ถ้ามี)", "ตัดสูงกว่าระดับน้ำประมาณ 30 ซม."],
+    ["p3-7", "ล้างจานชาม เฟอร์นิเจอร์ไม้จริง / โลหะ / พลาสติก"],
+  ]},
+  { id: "p4", label: "4. ทำให้แห้ง", when: "สัปดาห์ที่ 1–4", goal: "ผนังและพื้นแห้งสนิทก่อนซ่อม", tasks: [
+    ["p4-1", "เปิดประตูหน้าต่างทุกบาน เปิดพัดลมทั้งวัน"],
+    ["p4-2", "เช็ดไฮเตอร์ซ้ำจุดที่ขึ้นราดำ"],
+    ["p4-3", "รอผนังปูนแห้งสนิท", "มักใช้เวลา 2–4 สัปดาห์ ห้ามทาสีหรือฉาบก่อน"],
+  ]},
+  { id: "p5", label: "5. ซ่อม + กลับเข้าอยู่", when: "หลังผนังแห้ง", goal: "ระบบไฟ น้ำ ประตู พร้อมใช้งาน", tasks: [
+    ["p5-1", "ช่างไฟตรวจทั้งหลังก่อนเปิดเมน"],
+    ["p5-2", "เปลี่ยนปลั๊กและสวิตช์ที่ต่ำกว่า 1 เมตร"],
+    ["p5-3", "เปลี่ยนเบรกเกอร์ / ตู้ไฟ ถ้าจมน้ำ"],
+    ["p5-4", "ส่งช่างเช็กเครื่องใช้ไฟฟ้าที่จมน้ำ"],
+    ["p5-5", "เช็กส้วม ท่อ บ่อเกรอะ ว่าไม่อุดตันหรือมีน้ำย้อน"],
+    ["p5-6", "ซ่อมหรือเปลี่ยนประตู / วงกบที่บวม"],
+    ["p5-7", "ทาสีกันราและเก็บงานผนัง"],
+  ]},
+];
+
+const SUPPLIES = [
+  ["s-1", "บูทยาง ถุงมือยางหนา หน้ากาก"],
+  ["s-2", "พลั่ว ไม้กวาดทางมะพร้าว ที่รีดน้ำ"],
+  ["s-3", "ถุงขยะดำใบใหญ่"],
+  ["s-4", "ถังน้ำ ฟองน้ำ แปรงขัด"],
+  ["s-5", "ผงซักฟอก ไฮเตอร์"],
+  ["s-6", "สายยาง / เครื่องฉีดน้ำแรงดันสูง"],
+  ["s-7", "พัดลม (ใช้ไฟจากข้างนอกบ้านหรือเพื่อนบ้าน)"],
+  ["s-8", "ชุดปฐมพยาบาล พลาสเตอร์กันน้ำ"],
+  ["s-9", "น้ำดื่มขวด"],
+];
+
+const SORT = [
+  ["ที่นอน หมอน โซฟาผ้า พรม ผ้าม่าน", "ทิ้ง", "red"],
+  ["ตู้ เตียง ชั้นวาง ปาร์ติเกิลบอร์ด / MDF", "ทิ้ง", "red"],
+  ["อาหาร และของในตู้เย็นที่ไฟดับนาน", "ทิ้ง", "red"],
+  ["พื้นลามิเนต ผนังยิปซัมส่วนที่จม", "รื้อ / ทิ้ง", "red"],
+  ["ตู้เย็น เครื่องซักผ้า ทีวี แอร์ตัวล่าง", "ส่งช่าง ห้ามเสียบปลั๊กเอง", "amber"],
+  ["ปลั๊ก สวิตช์ ตู้ไฟ ที่ต่ำกว่า 1 ม.", "ให้ช่างไฟตรวจ / เปลี่ยน", "amber"],
+  ["รถที่จอดในบ้าน", "ห้ามสตาร์ท ลากไปอู่", "amber"],
+  ["ประตูไม้จริง", "รอแห้ง อาจใช้ต่อได้", "amber"],
+  ["เฟอร์นิเจอร์ไม้จริง โลหะ พลาสติก", "ล้าง + ฆ่าเชื้อ ใช้ต่อ", "green"],
+  ["จานชาม แก้ว หม้อ", "ล้าง + ฆ่าเชื้อ ใช้ต่อ", "green"],
+  ["พื้นกระเบื้อง / หิน ผนังปูน", "ล้าง + รอแห้ง ใช้ต่อ", "green"],
+];
+
+const KEY = "flood-recovery-plan";
+let state = { done: {}, active: "p1" };
+try { state = Object.assign(state, JSON.parse(localStorage.getItem(KEY) || "{}")); } catch (e) {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} };
+
+const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const phaseDone = (p) => p.tasks.filter((t) => state.done[t[0]]).length;
+
+function taskHtml([id, text, note]) {
+  const d = !!state.done[id];
+  return `<label class="task${d ? " done" : ""}">
+    <input type="checkbox" data-id="${id}"${d ? " checked" : ""}>
+    <div><div class="text">${esc(text)}</div>${note ? `<div class="note">${esc(note)}</div>` : ""}</div>
+  </label>`;
+}
+
+function render() {
+  const all = PHASES.flatMap((p) => p.tasks);
+  const n = all.filter((t) => state.done[t[0]]).length;
+  document.getElementById("progress-text").textContent = `${n} / ${all.length} งาน`;
+  document.getElementById("progress-bar").style.width = `${(n / all.length) * 100}%`;
+
+  document.getElementById("overview").innerHTML = PHASES.map((p) => {
+    const d = phaseDone(p);
+    const dot = d === p.tasks.length ? "green" : d > 0 ? "amber" : "none";
+    return `<tr><td><span class="dot ${dot}"></span>${esc(p.label)}</td><td>${esc(p.when)}</td><td>${esc(p.goal)}</td><td class="num">${d} / ${p.tasks.length}</td></tr>`;
+  }).join("");
+
+  document.getElementById("tabs").innerHTML = PHASES.map((p) =>
+    `<button class="tab${p.id === state.active ? " active" : ""}" data-phase="${p.id}">${esc(p.label)} (${phaseDone(p)}/${p.tasks.length})</button>`
+  ).join("");
+
+  const phase = PHASES.find((p) => p.id === state.active) || PHASES[0];
+  document.getElementById("phase-title").textContent = `${phase.label} · ${phase.when}`;
+  document.getElementById("phase-goal").textContent = phase.goal;
+  document.getElementById("phase-tasks").innerHTML = phase.tasks.map(taskHtml).join("");
+  document.getElementById("supplies").innerHTML = SUPPLIES.map(taskHtml).join("");
+
+  document.getElementById("sort").innerHTML = SORT.map(([item, action, tone]) =>
+    `<tr><td><span class="dot ${tone}"></span>${esc(item)}</td><td>${esc(action)}</td></tr>`
+  ).join("");
+}
+
+document.addEventListener("change", (e) => {
+  const id = e.target.dataset && e.target.dataset.id;
+  if (!id) return;
+  state.done[id] = e.target.checked;
+  save(); render();
+});
+document.addEventListener("click", (e) => {
+  const t = e.target.closest && e.target.closest("[data-phase]");
+  if (!t) return;
+  state.active = t.dataset.phase;
+  save(); render();
+});
+document.getElementById("reset").addEventListener("click", () => {
+  if (!confirm("ล้างเช็กลิสต์ทั้งหมด?")) return;
+  state.done = {}; save(); render();
+});
+
+render();
+</script>
+</body>
+</html>
